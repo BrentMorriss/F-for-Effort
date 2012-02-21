@@ -6,6 +6,7 @@ class Registration extends LayoutController
 	{
 		parent::__construct();	 
 		$this->load->helper('url');
+		$this->load->helper('form');
 	}
 		
 	public function index()
@@ -22,6 +23,70 @@ class Registration extends LayoutController
 	
 	public function search()
 	{
-		$this->Set('content', $this->load->view('registration/search'));
+		// Define a variable for search results.
+		$results = array();
+		
+		// If post data came in,
+		$post = $this->input->post(null, true);		
+		if(!empty($post))
+		{
+			print_r($post);
+			// Build a query.
+			$sign = $this->input->post('courseNumberSearchType');
+			
+			// Find the sign to use in the course number search.
+			if($sign == 'greater')
+			{
+				$sign = '>';
+			}
+			else if($sign == 'less')
+			{
+				$sign = '<';
+			}
+			else
+			{
+				$sign = '=';
+			}
+			
+			$courseNumber = $this->input->post('courseNumber');
+			if(empty($courseNumber))
+			{
+				$courseNumber = '*';
+				$sign = '=';
+			}
+			//if($this->input->post('courseNumberSearchType') == 'contains')
+			//{
+			//	$courseNumber = '%'.$courseNumber.'%';
+			//}
+			
+			// TODO: Sync this up with course_enrollment table.
+			//$endQuery = '';
+			//if($this->input->post('openClasses') == 1)
+			//{
+			//	$endQuery = ' AND 
+			//}
+			
+			$deptID = -1;
+			$subject = $this->input->post('subject');
+			$subject = $this->db->query('SELECT id FROM departments WHERE ticker=? OR name=?', array($subject, $subject));
+			$deptID = -1;
+			if($subject->num_rows() == 1)
+			{
+					foreach($subject->result() as $row)
+					{
+						$deptID = $row->id;
+					}
+			}
+			$query = 'SELECT * FROM courses WHERE course_number'.$sign.'?';
+			if($deptID != -1)
+			{
+				$query .= ' AND deptartment_id=?';
+			}
+			$results = $this->db->query($query, array($courseNumber, $deptID));
+		}
+	
+		$data = array();
+		$data['results'] = $results;
+		$this->Set('content', $this->load->view('registration/search', $data, true));
 	}
 }

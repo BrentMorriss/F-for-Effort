@@ -1,24 +1,14 @@
 <div id="login_form">
-	<?php echo form_open(base_url()); ?>
-		<ul>
-			<li>
-		    	<?php echo validation_errors(); ?>
-		    </li>
-			<li>
-		    	<label>Email</label>
-		        <div>
-					<?php echo form_input(array('id'=>'email', 'name'=>'email')); ?>
-				</div>
-		    </li>
-		    <li>
-		    	<label>Password</label>
-		        <div>
-					<?php echo form_password(array('id'=>'password', 'name'=>'password')); ?>
-				</div>
-		    </li>
-		    <li>
-		    	<?php echo form_submit(array('name'=>'submit'), 'Login'); ?>
-		    </li>
-		</ul>
-	<?php echo form_close(); ?>
+	<?php 
+		echo form_fieldset('Login');
+		echo form_open(base_url());
+		echo validation_errors();
+		echo '<label>Email</label>';
+		echo '<div>'.form_input(array('id'=>'email', 'name'=>'email')).'</div>';
+		echo '<label>Password</label>';
+		echo '<div>'.form_password(array('id'=>'password', 'name'=>'password')).'</div>';
+		echo form_submit(array('name'=>'submit'), 'Login');
+		echo form_fieldset_close();
+		echo form_close(); 
+	?>
 </div>
