@@ -2,7 +2,6 @@
 
 class Users extends LayoutController
 {	
-
 	public function index()
 	{
 		if($this->session->userdata('logged_in')==true)
