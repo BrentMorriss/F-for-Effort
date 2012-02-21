@@ -1,4 +1,40 @@
+<style type="text/css">
+div#login_form {
+	width:315px;
+	margin:100px auto;
+	padding:15px;
+	border:solid 1px #ccc;
+	background:#fbfbfb;
+	font-family:arial;
+	font-size:12px;
+}
+ul{
+	list-style:none;
+}
+ul li{
+	margin:15px;
+}
+ul li label{
+	font-family:arial;
+	font-size:12px;
+	color:#555;
+}
+ul li input#email, ul li input#password{
+	width:205px;
+	height:25px;
+}
+div.title{
+	font-size:22px;
+	color:#555;
+	margin-left:55px;
+	margin-right:55px;
+	margin-top:20px;
+	margin-bottom:20px;
+	border-bottom:1px solid #fdfdfd;
+}
+</style>
 <div id="login_form">
+	<div class="title">Login</div>
 	<?php echo form_open(base_url()); ?>
 		<ul>
 			<li>

@@ -31,12 +31,14 @@ class Users extends LayoutController
 			else
 			{	
 				extract($_POST);
-				$id = $this->User_model->check_login($email, $password);
+				$id = $this->User_model->authenticate($email, $password);
 				//echo $id;
 				if($id)
 				{
 					// Your In!!!
+					//$information = $this->User_model->getInformation($id);
 					$this->session->set_userdata(array('logged_in'=>true, 'user_id'=>$id));
+					//$this->session->set_userdata($information);
 					$this->home();
 				}
 				else

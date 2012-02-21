@@ -7,7 +7,7 @@ class User_model extends CI_Model {
 		parent::__construct();	 
 	}
 	
-	public function check_login($email, $password)
+	public function authenticate($email, $password)
 	{
 		$sha1_password = sha1($password);
 		$query_str = "SELECT id FROM users WHERE email=? AND password=?";
@@ -16,13 +16,22 @@ class User_model extends CI_Model {
 		
 		if($result->num_rows() == 1)
 		{
-			return true;
+			return $result->row(0)->id;
 		}
 		else
 		{
 			return false;
 		}
 	}
+	
+	/*public function getInformation($id)
+	{
+		$query_str = "SELECT * FROM users WHERE id=?";
+		$result = $this->db->query($query_str, array($id));
+		$name = $result->row()->name;
+		$euid = $result->row()->euid;
+		return array('name'=>$name, 'euid'=>$euid);
+	}*/
 	
 }
 
