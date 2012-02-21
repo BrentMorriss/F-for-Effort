@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 3.3.9.2
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 19, 2012 at 06:12 AM
--- Server version: 5.1.41
--- PHP Version: 5.3.1
+-- Generation Time: Feb 21, 2012 at 01:01 AM
+-- Server version: 5.5.9
+-- PHP Version: 5.2.17
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -25,7 +25,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `courses`
 --
 
-CREATE TABLE IF NOT EXISTS `courses` (
+CREATE TABLE `courses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deptartment_id` int(11) NOT NULL,
   `course_number` int(11) NOT NULL,
@@ -35,156 +35,18 @@ CREATE TABLE IF NOT EXISTS `courses` (
   PRIMARY KEY (`id`),
   KEY `deptartment_id` (`deptartment_id`),
   KEY `course` (`course_number`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `courses`
 --
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_enrollment`
---
-
-CREATE TABLE IF NOT EXISTS `course_enrollment` (
-  `student_id` int(11) NOT NULL,
-  `course_id` int(11) NOT NULL,
-  KEY `student_id` (`student_id`,`course_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `course_enrollment`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_prerequisites`
---
-
-CREATE TABLE IF NOT EXISTS `course_prerequisites` (
-  `course_id` int(11) NOT NULL,
-  `prerequisite_course_id` int(11) NOT NULL,
-  KEY `course_id` (`course_id`,`prerequisite_course_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `course_prerequisites`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_sections`
---
-
-CREATE TABLE IF NOT EXISTS `course_sections` (
-  `course_id` int(11) NOT NULL,
-  `section` int(11) NOT NULL,
-  `course_time_id` int(11) NOT NULL,
-  `enrollment` int(11) NOT NULL,
-  `capacity` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL,
-  KEY `course_id` (`course_id`,`section`,`course_time_id`,`teacher_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `course_sections`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_terms`
---
-
-CREATE TABLE IF NOT EXISTS `course_terms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `year` int(11) NOT NULL,
-  `term` tinyint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `start_date` (`start_date`,`end_date`,`year`,`term`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `course_terms`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `course_times`
---
-
-CREATE TABLE IF NOT EXISTS `course_times` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `term_id` int(11) NOT NULL,
-  `start_time` smallint(6) NOT NULL,
-  `end_time` smallint(6) NOT NULL,
-  `monday` tinyint(1) NOT NULL,
-  `tuesday` tinyint(1) NOT NULL,
-  `wednesday` tinyint(1) NOT NULL,
-  `thursday` tinyint(1) NOT NULL,
-  `friday` tinyint(1) NOT NULL,
-  `saturday` tinyint(1) NOT NULL,
-  `sunday` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `semester` (`term_id`,`start_time`,`end_time`,`monday`,`tuesday`,`wednesday`,`thursday`,`friday`,`saturday`,`sunday`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `course_times`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `departments`
---
-
-CREATE TABLE IF NOT EXISTS `departments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ticker` varchar(10) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `departments`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(128) NOT NULL,
-  `last_name` varchar(128) NOT NULL,
-  `euid` varchar(10) NOT NULL,
-  `password` varchar(64) NOT NULL,
-  `email` varchar(300) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `euid` (`euid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `users`
---
-
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO `courses` VALUES(1, 1, 4410, 'Software Development I', 3, 'The software development process, requirements analysis, software design concepts and methodologies, structured programming, debugging and testing.');
+INSERT INTO `courses` VALUES(2, 1, 1030, 'Computer Science I', 3, 'Introduction to Computer Science and Engineering, problem-solving techniques, algorithmic processes, software design and development.');
+INSERT INTO `courses` VALUES(3, 1, 1040, 'Computer Science II', 3, 'Continuation of CSCE 1030. Software design, structured programming, object oriented design and programming.');
+INSERT INTO `courses` VALUES(4, 1, 2050, 'Computer Science III', 3, 'Elementary data structures, practice in software design, implementation and testing with emphasis on creating and modifying larger programs. ');
+INSERT INTO `courses` VALUES(5, 1, 3110, 'Data Structures and Algorithms', 3, 'Computer storage structures; storage allocation and management; data sorting and searching techniques; data structures in programming languages.');
+INSERT INTO `courses` VALUES(6, 2, 1710, 'Calculus I', 4, 'Limits and continuity, derivatives and integrals; differentiation and integration of polynomial, rational, trigonometric, and algebraic functions; applications, including slope, velocity, extrema, area, volume and work.');
+INSERT INTO `courses` VALUES(7, 2, 1720, 'Calculus II', 3, 'Differentiation and integration of exponential, logarithmic and transcendental functions; integration techniques; indeterminate forms; improper integrals; area and arc length in polar coordinates; infinite series; power series; Taylor’s theorem.');
+INSERT INTO `courses` VALUES(8, 2, 2700, 'Linear Algebra and Vector Geometry', 3, 'Vector spaces over the real number field; applications to systems of linear equations and analytic geometry in En, linear transformations, matrices, determinants and eigenvalues.');
+INSERT INTO `courses` VALUES(9, 2, 2730, 'Multivariable Calculus', 3, 'Vectors and analytic geometry in 3-space; partial and directional derivatives; extrema; double and triple integrals and applications; cylindrical and spherical coordinates.');
