@@ -1,128 +1,118 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Simple benchmarking.
+ * CodeIgniter
  *
- * $Id: Benchmark.php 4679 2009-11-10 01:45:52Z isaiah $
+ * An open source application development framework for PHP 5.1.6 or newer
  *
- * @package    Core
- * @author     Kohana Team
- * @copyright  (c) 2007-2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @package		CodeIgniter
+ * @author		ExpressionEngine Dev Team
+ * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		http://codeigniter.com
+ * @since		Version 1.0
+ * @filesource
  */
-final class Benchmark {
 
-	// Benchmark timestamps
-	private static $marks;
+// ------------------------------------------------------------------------
 
-	/**
-	 * Set a benchmark start point.
-	 *
-	 * @param   string  benchmark name
-	 * @return  void
-	 */
-	public static function start($name)
-	{
-		if (isset(self::$marks[$name]) AND self::$marks[$name][0]['stop'] === FALSE)
-			throw new Kohana_Exception('A benchmark named :name is already running.', array(':name' => $name));
-
-		if ( ! isset(self::$marks[$name]))
-		{
-			self::$marks[$name] = array();
-		}
-
-		$mark = array
-		(
-			'start'        => microtime(TRUE),
-			'stop'         => FALSE,
-			'memory_start' => self::memory_usage(),
-			'memory_stop'  => FALSE
-		);
-
-		array_unshift(self::$marks[$name], $mark);
-	}
+/**
+ * CodeIgniter Benchmark Class
+ *
+ * This class enables you to mark points and calculate the time difference
+ * between them.  Memory consumption can also be displayed.
+ *
+ * @package		CodeIgniter
+ * @subpackage	Libraries
+ * @category	Libraries
+ * @author		ExpressionEngine Dev Team
+ * @link		http://codeigniter.com/user_guide/libraries/benchmark.html
+ */
+class CI_Benchmark {
 
 	/**
-	 * Set a benchmark stop point.
+	 * List of all benchmark markers and when they were added
 	 *
-	 * @param   string  benchmark name
-	 * @return  void
+	 * @var array
 	 */
-	public static function stop($name)
-	{
-		if (isset(self::$marks[$name]) AND self::$marks[$name][0]['stop'] === FALSE)
-		{
-			self::$marks[$name][0]['stop'] = microtime(TRUE);
-			self::$marks[$name][0]['memory_stop'] = self::memory_usage();
-		}
-	}
+	var $marker = array();
+
+	// --------------------------------------------------------------------
 
 	/**
-	 * Get the elapsed time between a start and stop.
+	 * Set a benchmark marker
 	 *
-	 * @param   string   benchmark name, TRUE for all
-	 * @param   integer  number of decimal places to count to
-	 * @return  array
+	 * Multiple calls to this function can be made so that several
+	 * execution points can be timed
+	 *
+	 * @access	public
+	 * @param	string	$name	name of the marker
+	 * @return	void
 	 */
-	public static function get($name, $decimals = 4)
+	function mark($name)
 	{
-		if ($name === TRUE)
-		{
-			$times = array();
-			$names = array_keys(self::$marks);
-
-			foreach ($names as $name)
-			{
-				// Get each mark recursively
-				$times[$name] = self::get($name, $decimals);
-			}
-
-			// Return the array
-			return $times;
-		}
-
-		if ( ! isset(self::$marks[$name]))
-			return FALSE;
-
-		if (self::$marks[$name][0]['stop'] === FALSE)
-		{
-			// Stop the benchmark to prevent mis-matched results
-			self::stop($name);
-		}
-
-		// Return a string version of the time between the start and stop points
-		// Properly reading a float requires using number_format or sprintf
-		$time = $memory = 0;
-		for ($i = 0; $i < count(self::$marks[$name]); $i++)
-		{
-			$time += self::$marks[$name][$i]['stop'] - self::$marks[$name][$i]['start'];
-			$memory += self::$marks[$name][$i]['memory_stop'] - self::$marks[$name][$i]['memory_start'];
-		}
-
-		return array
-		(
-			'time'   => number_format($time, $decimals),
-			'memory' => $memory,
-			'count'  => count(self::$marks[$name])
-		);
+		$this->marker[$name] = microtime();
 	}
+
+	// --------------------------------------------------------------------
 
 	/**
-	 * Returns the current memory usage. This is only possible if the
-	 * memory_get_usage function is supported in PHP.
+	 * Calculates the time difference between two marked points.
 	 *
-	 * @return  integer
+	 * If the first parameter is empty this function instead returns the
+	 * {elapsed_time} pseudo-variable. This permits the full system
+	 * execution time to be shown in a template. The output class will
+	 * swap the real value for this variable.
+	 *
+	 * @access	public
+	 * @param	string	a particular marked point
+	 * @param	string	a particular marked point
+	 * @param	integer	the number of decimal places
+	 * @return	mixed
 	 */
-	private static function memory_usage()
+	function elapsed_time($point1 = '', $point2 = '', $decimals = 4)
 	{
-		static $func;
-
-		if ($func === NULL)
+		if ($point1 == '')
 		{
-			// Test if memory usage can be seen
-			$func = function_exists('memory_get_usage');
+			return '{elapsed_time}';
 		}
 
-		return $func ? memory_get_usage() : 0;
+		if ( ! isset($this->marker[$point1]))
+		{
+			return '';
+		}
+
+		if ( ! isset($this->marker[$point2]))
+		{
+			$this->marker[$point2] = microtime();
+		}
+
+		list($sm, $ss) = explode(' ', $this->marker[$point1]);
+		list($em, $es) = explode(' ', $this->marker[$point2]);
+
+		return number_format(($em + $es) - ($sm + $ss), $decimals);
 	}
 
-} // End Benchmark
+	// --------------------------------------------------------------------
+
+	/**
+	 * Memory Usage
+	 *
+	 * This function returns the {memory_usage} pseudo-variable.
+	 * This permits it to be put it anywhere in a template
+	 * without the memory being calculated until the end.
+	 * The output class will swap the real value for this variable.
+	 *
+	 * @access	public
+	 * @return	string
+	 */
+	function memory_usage()
+	{
+		return '{memory_usage}';
+	}
+
+}
+
+// END CI_Benchmark class
+
+/* End of file Benchmark.php */
+/* Location: ./system/core/Benchmark.php */
