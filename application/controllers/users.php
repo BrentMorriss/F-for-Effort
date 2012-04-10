@@ -50,13 +50,14 @@ class Users extends LayoutController
 	}
 	
 	public function home(){
-		if($this->session->userdata('logged_in')==true){
+		if($this->session->userdata('logged_in')==true)
+		{
 			$array['schedule'] = $this->User_model->getCourses($this->session->userdata('user_id'));
 			$this->Set('content', $this->load->view('users/home', $array, true));
-			//echo "<pre>";
-			//print_r($array);
-			//print_r($this->session->userdata);
-			//echo "</pre>";
+			echo "<pre>";
+			print_r($array);
+			print_r($this->session->userdata);
+			echo "</pre>";
 		}
 		else
 		{

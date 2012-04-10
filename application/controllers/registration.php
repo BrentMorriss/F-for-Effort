@@ -13,13 +13,24 @@ class Registration extends LayoutController
 	{
 		// Redirect to the user's course/enrollment listing.
 		// TODO: Replace 0 with the user's id grabbed from session variables.
-		redirect('/registration/schedule/0');
+		redirect(base_url());
 	}
 	
 	public function schedule()
 	{
 		$array['schedule'] = $this->User_model->getCourses($this->session->userdata('user_id'));
 		$this->Set('content', $this->load->view('registration/schedule', $array, true));
+	}
+	
+	public function del($student, $course)
+	{
+		if ($student == NULL && $course == NULL)
+		{
+			$this->errors[] = 'Error deleting row.';
+			return FALSE;
+		}
+		$this->User_model->deleteCourse($student, $course);
+		return TRUE;
 	}
 	
 	public function search()

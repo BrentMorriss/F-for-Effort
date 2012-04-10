@@ -1,4 +1,7 @@
 <style type="text/css">
+body{
+	font-family: verdana,arial,sans-serif;
+}
 table.schedule {
 	font-family: verdana,arial,sans-serif;
 	font-size:11px;
@@ -35,6 +38,7 @@ if($schedule)
 				<th>Days/Time</th>
 				<th>Instructor</th>
 				<th>Units</th>
+				<th>Action</th>
 			</tr>
 			
 EOF;
@@ -56,6 +60,9 @@ EOF;
 		echo "<td>".$week." ".$array['start_time']." ".$array['end_time']."</td>";
 		echo "<td>Staff</td>";
 		echo "<td>".$array['credit']."</td>";
+		echo "<td><a href='index.php/registration/del/student/".$this->session->userdata('user_id')."/course/$course_id'>Drop</a></td>";
+		
+		
 		echo "</tr>";
 	}
 	
