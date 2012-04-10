@@ -87,7 +87,7 @@ class User_model extends CI_Model {
 									$end_date=$row['end_date'];
 									$year=$row['year'];
 									$term=$row['term'];
-																					$array[$course_section_id] = array('name'=>$name, 'course_number'=>$course_number,'credit'=>$credit, 'description'=>$description, 'ticker'=>$ticker, 'department_name'=>$department_name, 'enrolled'=>$enrolled, 'capacity'=>$capacity, 'start_time'=>$start_time, 'end_time'=>$end_time, 'monday'=>$monday, 'tuesday'=>$tuesday, 'wednesday'=>$wednesday, 'thursday'=>$thursday, 'friday'=>$friday, 'saturday'=>$saturday, 'sunday'=>$sunday, 'start_date'=>$start_date, 'end_date'=>$end_date, 'year'=>$year, 'term'=>$term);
+																					$array[$course_section_id] = array('name'=>$name, 'course_number'=>$course_number,'credit'=>$credit, 'description'=>$description, 'ticker'=>$ticker, 'department_name'=>$department_name, 'enrolled'=>$enrolled, 'capacity'=>$capacity, 'start_time'=>$start_time, 'end_time'=>$end_time, 'monday'=>$monday, 'tuesday'=>$tuesday, 'wednesday'=>$wednesday, 'thursday'=>$thursday, 'friday'=>$friday, 'saturday'=>$saturday, 'sunday'=>$sunday, 'start_date'=>$start_date, 'end_date'=>$end_date, 'year'=>$year, 'term'=>$term, 'section'=>$section);
 								}
 							}
 						}						

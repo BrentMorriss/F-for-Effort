@@ -1,5 +1,5 @@
 <?php
-echo form_fieldset('Class Search');
+//echo form_fieldset('Class Search');
 echo form_open(base_url().'index.php/registration/search');
 
 echo '<label style="margin-right: 15px;"> Course Subject:</label>';
@@ -19,7 +19,7 @@ echo '<label style="margin-right: 15px;"> Show Only Open Classes:</label>'.form_
 
 echo form_submit(array('name'=>'submit'), 'Search');
 echo form_close();
-echo form_fieldset_close();
+//echo form_fieldset_close();
 
 if(isset($results))
 {

@@ -16,9 +16,10 @@ class Registration extends LayoutController
 		redirect('/registration/schedule/0');
 	}
 	
-	public function schedule($userID)
+	public function schedule()
 	{
-		$this->Set('content', $this->load->view('registration/schedule', '', true));
+		$array['schedule'] = $this->User_model->getCourses($this->session->userdata('user_id'));
+		$this->Set('content', $this->load->view('registration/schedule', $array, true));
 	}
 	
 	public function search()
