@@ -107,8 +107,4 @@ class User_model extends CI_Model {
 	}
 }
 
-function deleteCourse($id, $course){
-  $this->load->database();
-  $this->db->delete('course_enrollment', array('student_id' => $id, 'course_section_id'=>$course)); 
-}
 ?>

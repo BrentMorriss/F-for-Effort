@@ -67,7 +67,7 @@ EOF;
 		echo "<td> $week ".convertTime($array['start_time'])."-".convertTime($array['end_time'])."</td>";
 		echo "<td>Staff</td>";
 		echo "<td>".$array['credit']."</td>";
-		echo "<td><a href='index.php/registration/del/student/".$this->session->userdata('user_id')."/course/$course_id'>Drop</a></td>";
+		echo "<td><a href='index.php/registration/drop/$course_id'>Drop</a></td>";
 		
 		
 		echo "</tr>";

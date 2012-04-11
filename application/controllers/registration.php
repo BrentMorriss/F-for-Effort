@@ -22,14 +22,17 @@ class Registration extends LayoutController
 		$this->Set('content', $this->load->view('registration/schedule', $array, true));
 	}
 	
-	public function del($student, $course)
+	public function drop($course)
 	{
+		$student = $this->session->userdata('user_id');
 		if ($student == NULL && $course == NULL)
 		{
 			$this->errors[] = 'Error deleting row.';
 			return FALSE;
 		}
-		$this->User_model->deleteCourse($student, $course);
+		$this->db->delete('course_enrollment', array('student_id' => $student, 'course_section_id'=>$course));
+		//$this->User_model->deleteCourse($student, $course);
+		redirect(base_url());
 		return TRUE;
 	}
 	
