@@ -59,7 +59,7 @@ $euid = $this->session->userdata('euid');
 //echo $schedule[4]['name'];
 ?>
 
-<h3><?php echo "<span style='text-transform:capitalize'>Hello, ".$first_name."!</span>";?> <a href="/index.php/users/logout">Logout</a></h3>
+<h3><?php echo "<span style='text-transform:capitalize'>Hello, ".$first_name."!</span>";?></h3>
     		
     		<div class="tabbed-area cur-nav-fix">
         		
@@ -69,8 +69,8 @@ $euid = $this->session->userdata('euid');
                      <? $this->load->view('registration/schedule'); ?>  
                  		<ul class="tabs group">
 							<li class="cur"><a href="#schedule">Schedule</a></li>
-							<li><a href="#search">Search</a></li>
-							<li><a href="#add">Add</a></li>
+							<li><a href="#search">Add</a></li>
+							<li><a href="/index.php/users/logout">Logout</a></li>
 						</ul>
                 	</div>
                 	
@@ -78,17 +78,16 @@ $euid = $this->session->userdata('euid');
                 	    <? $this->load->view('registration/search'); ?>
                  		<ul class="tabs group">
 							<li><a href="#schedule">Schedule</a></li>
-							<li class="cur"><a href="#search">Search</a></li>
-							<li><a href="#add">Add</a></li>
+							<li class="cur"><a href="#search">Add</a></li>
+							<li><a href="/index.php/users/logout">Logout</a></li>
 						</ul>
                 	</div>
                 	
                 	<div id="add">
-                	    <p>Add coming soon.</p>
                  		<ul class="tabs group">
 							<li><a href="#schedule">Schedule</a></li>
-							<li><a href="#search">Search</a></li>
-							<li class="cur"><a href="#add">Add</a></li>
+							<li><a href="#search">Add</a></li>
+							<li class="cur"><a href="/index.php/users/logout">Logout</a></li>
 						</ul>
                 	</div>
                 
