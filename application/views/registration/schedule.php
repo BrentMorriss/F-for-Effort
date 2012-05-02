@@ -25,6 +25,7 @@ table.schedule td {
 	background-color: #ffffff;
 }
 </style>
+
 <?php
 function convertTime($time){
 	$minutes = $time % 60;
