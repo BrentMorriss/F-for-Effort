@@ -1,0 +1,36 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a:link {color:#FF0000;}
+ a:visited {color:#00FF00;}
+
+a:link {color:#000;}
+a:visited {color:#000;}
+a { text-decoration:none; }
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+#homeContentFrame {
+	border: 1px solid #CCC;
+	border-left: 0px;
+	border-right: 0px;
+}
+
+.homeTab {
+	border: 1px solid #CCC;
+	border-bottom: 0px;
+	padding: 10px;
+	float: left;
+}
+
+.homeTabBody {
+	padding: 15px;
+}
