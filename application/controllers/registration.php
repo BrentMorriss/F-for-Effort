@@ -2,11 +2,9 @@
 
 class Registration extends LayoutController
 {
-    public function __construct()
+	public function __construct()
 	{
 		parent::__construct();	 
-		$this->load->helper('url');
-		$this->load->helper('form');
 	}
 		
 	public function index()
@@ -14,6 +12,7 @@ class Registration extends LayoutController
 		// Redirect to the user's course/enrollment listing.
 		// TODO: Replace 0 with the user's id grabbed from session variables.
 		redirect(base_url());
+		
 	}
 	
 	public function schedule()
@@ -104,4 +103,41 @@ class Registration extends LayoutController
 		$data['results'] = $results;
 		$this->Set('content', $this->load->view('registration/search', $data, true));
 	}
+	
+	public function shoppingcart()
+	{
+		$this->Set('content', $this->load->view('registration/shoppingcart', '', true));
+	}
+	
+	public function addToCart($id)
+	{
+		//$data = $this->session->userdata();
+		$cart = $this->session->userdata('cart');
+		if (empty($cart))
+		{
+			$data['cart'][$id] =  $this->User_model->getACourse($id);
+			$this->session->set_userdata($data);
+		}
+		else
+		{
+			$count=0;
+			foreach ($cart as $key => $array) {
+				if($array['id']==$id)
+					$count++;
+			}
+			if($count==0)
+			{
+				$data['cart'][] = $this->User_model->getACourse($id);
+				$this->session->set_userdata($data);
+			}
+				
+		}
+		redirect(base_url());
+	}
+	
+	public function deleteFromCart()
+	{
+		
+	}
+	
 }
