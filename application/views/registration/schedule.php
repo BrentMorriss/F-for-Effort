@@ -52,14 +52,19 @@ EOF;
 	
 	foreach($schedule as $course_id => $array)
 	{
-		$monday = $array['monday']==1 ? 'Mo': '';
-		$tuesday = $array['tuesday']==1 ? 'Tu': '';
-		$wednesday = $array['wednesday']==1 ? 'We': '';
-		$thursday = $array['thursday']==1 ? 'Th': '';
-		$friday = $array['friday']==1 ? 'Fr': '';
-		$saturday = $array['saturday']==1 ? 'Sa': '';
-		$sunday = $array['sunday']==1 ? 'Su': '';
-		$week = $monday.$tuesday.$wednesday.$thursday.$friday.$saturday.$sunday;
+		$days = array(
+			'monday' => 'Mo',
+		  	'tuesday' => 'Tu',
+		  	'wednesday' => 'We',
+		  	'thursday' => 'Th',
+		  	'friday' => 'Fr',
+		  	'saturday' => 'Sa',
+		  	'sunday' => 'Su'
+		);
+		$week = '';
+		foreach($days as $day => $abbr)
+			if($array[$day])
+				$week .= $abbr;
 		
 		echo "<tr>";
 		echo "<td>".$array['ticker']." ".$array['course_number']."-".sprintf("%03s",$array['section'])."</td>";
@@ -67,7 +72,7 @@ EOF;
 		echo "<td> $week ".convertTime($array['start_time'])."-".convertTime($array['end_time'])."</td>";
 		echo "<td>Staff</td>";
 		echo "<td>".$array['credit']."</td>";
-		echo "<td><a href='index.php/registration/drop/$course_id'>Drop</a></td>";
+		echo "<td><a href='index.php/registration/drop/$course_id'>Drop</a> <a href='index.php/registration/addToCart/$course_id'>Add to Cart</a></td>";
 		
 		
 		echo "</tr>";

@@ -66,7 +66,7 @@ $euid = $this->session->userdata('euid');
                 <div class="box-wrap">
                 
                 	<div id="schedule">
-                     <? $this->load->view('registration/schedule'); ?>  
+                     <?php $this->load->view('registration/schedule'); ?>  
                  		<ul class="tabs group">
 							<li class="cur"><a href="#schedule">Schedule</a></li>
 							<li><a href="#search">Add</a></li>
@@ -75,7 +75,7 @@ $euid = $this->session->userdata('euid');
                 	</div>
                 	
                 	<div id="search">
-                	    <? $this->load->view('registration/search'); ?>
+                	    <?php $this->load->view('registration/search'); ?>
                  		<ul class="tabs group">
 							<li><a href="#schedule">Schedule</a></li>
 							<li class="cur"><a href="#search">Add</a></li>
@@ -90,7 +90,7 @@ $euid = $this->session->userdata('euid');
 							<li class="cur"><a href="/index.php/users/logout">Logout</a></li>
 						</ul>
                 	</div>
-                
                 </div>
     		
     		</div>
+<?php //$this->load->view('registration/shoppingcart'); ?>

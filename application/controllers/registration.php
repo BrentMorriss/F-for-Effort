@@ -4,7 +4,8 @@ class Registration extends LayoutController
 {
 	public function __construct()
 	{
-		parent::__construct();	 
+		parent::__construct();
+		$this->load->library('session');
 	}
 		
 	public function index()
@@ -106,38 +107,38 @@ class Registration extends LayoutController
 	
 	public function shoppingcart()
 	{
-		$this->Set('content', $this->load->view('registration/shoppingcart', '', true));
+		$session = $this->session->all_userdata();
+		$count = 0;
+		foreach ($session as $key => $value) {
+			if(is_numeric($key))
+			{
+				$array[$key] = $this->User_model->getACourse($key);
+				$count++;
+			}
+		}
+		if($count>0)
+		{
+			$array['cart'] = $array;
+			$this->Set('content', $this->load->view('registration/shoppingcart', $array, true));
+		}
+		else
+		{
+			$this->Set('content', $this->load->view('registration/shoppingcart', '', true));
+		}
+		
 	}
 	
 	public function addToCart($id)
 	{
-		//$data = $this->session->userdata();
-		$cart = $this->session->userdata('cart');
-		if (empty($cart))
-		{
-			$data['cart'][$id] =  $this->User_model->getACourse($id);
-			$this->session->set_userdata($data);
-		}
-		else
-		{
-			$count=0;
-			foreach ($cart as $key => $array) {
-				if($array['id']==$id)
-					$count++;
-			}
-			if($count==0)
-			{
-				$data['cart'][] = $this->User_model->getACourse($id);
-				$this->session->set_userdata($data);
-			}
-				
-		}
+		$data[$id] = $id;
+		$this->session->set_userdata($data);
 		redirect(base_url());
 	}
 	
-	public function deleteFromCart()
+	public function deleteFromCart($id)
 	{
-		
+		$this->session->unset_userdata($id);
+		redirect('http://localhost/index.php/registration/shoppingcart');
 	}
 	
 }

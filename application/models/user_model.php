@@ -105,6 +105,79 @@ class User_model extends CI_Model {
 			return false;
 		}
 	}
+	
+	public function getACourse($course_id)
+	{
+			$query = $this->db->query("SELECT * FROM course_sections WHERE id=?", array($course_id));
+			foreach ($query->result_array() as $row)
+			{
+				$id = $row['id'];
+				$section = $row['section'];
+				$enrolled = $row['enrolled'];
+				$capacity = $row['capacity'];
+				$course_id = $row['course_id'];
+				$course_time_id = $row['course_time_id'];
+				$teacher_id = $row['teacher_id'];
+				$term_id = $row['term_id'];
+				
+				$query = $this->db->query("SELECT * FROM course_terms WHERE id=?", array($term_id));
+				foreach ($query->result_array() as $row)				{
+					$start_date=$row['start_date'];
+					$end_date=$row['end_date'];
+					$year=$row['year'];
+					$term=$row['term'];
+					
+					$query = $this->db->query("SELECT * FROM courses WHERE id=?", array($course_id));
+					foreach ($query->result_array() as $row)					{
+						$name=$row['name'];
+						$course_number=$row['course_number'];
+						$credit=$row['credit'];
+						$department_id=$row['department_id'];
+						$description=$row['description'];
+						
+						$query = $this->db->query("SELECT * FROM departments WHERE id=?", array($department_id));
+						foreach ($query->result_array() as $row)
+						{
+							$ticker=$row['ticker'];
+							$department_name=$row['name'];
+							
+							$query = $this->db->query("SELECT * FROM course_times WHERE id=?", array($course_time_id));
+							foreach ($query->result_array() as $row)							{
+								$start_time=$row['start_time'];
+								$end_time=$row['end_time'];
+								$monday=$row['monday'];
+								$tuesday=$row['tuesday'];
+								$wednesday=$row['wednesday'];
+								$thursday=$row['thursday'];
+								$friday=$row['friday'];
+								$saturday=$row['saturday'];
+								$sunday=$row['sunday'];
+																				$query = $this->db->query("SELECT * FROM course_terms WHERE id=?", array($term_id));
+								foreach ($query->result_array() as $row)
+								{
+									$start_date=$row['start_date'];
+									$end_date=$row['end_date'];
+									$year=$row['year'];
+									$term=$row['term'];
+																					$array = array('id'=>$id, 'course_id'=>$course_id, 'name'=>$name, 'course_number'=>$course_number,'credit'=>$credit, 'description'=>$description, 'ticker'=>$ticker, 'department_name'=>$department_name, 'enrolled'=>$enrolled, 'capacity'=>$capacity, 'start_time'=>$start_time, 'end_time'=>$end_time, 'monday'=>$monday, 'tuesday'=>$tuesday, 'wednesday'=>$wednesday, 'thursday'=>$thursday, 'friday'=>$friday, 'saturday'=>$saturday, 'sunday'=>$sunday, 'start_date'=>$start_date, 'end_date'=>$end_date, 'year'=>$year, 'term'=>$term, 'section'=>$section);
+								}
+							}
+						}						
+					}
+				}
+			}
+		
+		
+		if($query->num_rows() > 0)
+		{
+			return $array;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 }
 
 ?>

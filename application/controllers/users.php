@@ -37,6 +37,7 @@ class Users extends LayoutController
 					// Your In!!!
 					$data = $this->User_model->getUserData($id);
 					$this->session->set_userdata($data);
+					$this->session->set_userdata('cart');
 					$this->session->set_userdata(array('logged_in'=>true,'user_id'=>$id));
 					$this->home();
 				}
